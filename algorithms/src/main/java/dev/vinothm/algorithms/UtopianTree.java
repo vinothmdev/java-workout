@@ -10,11 +10,4 @@ public class UtopianTree {
                         ? ++height
                         : height * 2);
     }
-    
-    public static void main(String...args) {
-    	var tree = new UtopianTree();
-    	for (int i = 0; i < 10; i ++) {
-    		System.out.println(i + " " + tree.estimateGrowth(i));
-    	}
-    }
 }
