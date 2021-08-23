@@ -198,4 +198,7 @@ buildNumber.properties
 # Ignore all local history of files
 .history
 
+# Ignore Replit
+.replit
+
 # End of https://www.gitignore.io/api/java,maven,eclipse,intellij+all,visualstudiocode
