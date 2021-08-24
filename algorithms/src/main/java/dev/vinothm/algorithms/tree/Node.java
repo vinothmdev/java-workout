@@ -1,8 +1,13 @@
 package dev.vinothm.algorithms.tree;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+public class Node<T> {
+  T value;
+  Node<T> left;
+  Node<T> right;
 
-public class AngryProfessor {
-  
+  Node(T value, Node<T> left, Node<T> right) {
+    this.value = value;
+    this.left  = left;
+    this.right = right;
+  }
 }
