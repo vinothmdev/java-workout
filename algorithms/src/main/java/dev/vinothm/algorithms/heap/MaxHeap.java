@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class MaxHeap {
-  private int value;
-  private MaxHeap left;
-  private MaxHeap right;
+  int value;
+  MaxHeap left;
+  MaxHeap right;
 
   public MaxHeap(int value, MaxHeap left, MaxHeap right) {
     this.value = value;
