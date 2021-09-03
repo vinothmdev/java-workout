@@ -47,10 +47,25 @@ public class MaxHeap {
 
 	}
 
-	public void build(int[] arr) {
+	public void heapify(int[] arr, int length, int at) {
+		int left = this.getLeftOf(at);
+		int right = this.getRightOf(at);
+		int largest = left < length && arr[left] > arr[at] ? left : at;
+		largest = right < length && arr[right] > arr[largest] ? right : largest;
+		if (largest != at) {
+			int temp = arr[at];
+			arr[at] = arr[largest];
+			arr[largest] = temp;
+			this.heapify(arr, length, largest);
+		}
+
+	}
+
+	public int[] build(int[] arr) {
 		for (int i = arr.length / 2 - 1; i >= 0; i--) {
 			this.heapify(arr, i);
 		}
+		return arr;
 	}
 
 }
