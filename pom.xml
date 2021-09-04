@@ -6,7 +6,7 @@
     <groupId>dev.vinothm</groupId>
     <artifactId>collections</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
  
     <name>collections</name>
     <url>https://vinothm.dev</url>
