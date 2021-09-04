@@ -5,10 +5,11 @@ public class MaxHeap {
 
 	public MaxHeap(int[] value) {
 		this.value = value;
+		this.build();
 	}
 
 	public int getParentOf(int index) {
-		return index / 2 - 1;
+		return (index - 1) / 2;
 	}
 
 	public int getLeftOf(int index) {
@@ -66,6 +67,13 @@ public class MaxHeap {
 			this.heapify(arr, i);
 		}
 		return arr;
+	}
+
+	public int[] build() {
+		for (int i = this.value.length / 2 - 1; i >= 0; i--) {
+			this.heapify(this.value, i);
+		}
+		return this.value;
 	}
 
 }
