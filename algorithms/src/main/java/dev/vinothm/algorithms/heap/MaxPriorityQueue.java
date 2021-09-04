@@ -31,6 +31,7 @@ class MaxPriorityQueue {
 		}
 		int max = this.queue.value[0];
 		this.queue.value = Arrays.copyOfRange(this.queue.value, 1, this.queue.value.length);
+		this.queue.heapify(0);
 		return max;
 	}
 
@@ -48,6 +49,12 @@ class MaxPriorityQueue {
 			i = p;
 			p = this.queue.getParentOf(i);
 		}
+	}
+
+	public void insert(int key) throws Exception {
+		this.queue.value = Arrays.copyOf(this.queue.value, this.queue.value.length + 1);
+		this.queue.value[this.queue.value.length - 1] = Integer.MIN_VALUE;
+		this.increaseKey(this.queue.value.length - 1, key);
 	}
 
 }
