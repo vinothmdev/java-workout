@@ -1,13 +1,13 @@
 package dev.vinothm.algorithms.tree;
 
-public class Node<T> {
-  T value;
-  Node<T> left;
-  Node<T> right;
+public class Node {
+	int value;
+	Node left;
+	Node right;
 
-  Node(T value, Node<T> left, Node<T> right) {
-    this.value = value;
-    this.left  = left;
-    this.right = right;
-  }
+	Node(int value, Node left, Node right) {
+		this.value = value;
+		this.left = left;
+		this.right = right;
+	}
 }
