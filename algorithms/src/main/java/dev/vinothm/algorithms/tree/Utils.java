@@ -82,25 +82,114 @@ public class Utils {
 		return succ;
 	}
 
-	public Node insert(Node tree, int data) {
+	public Node insert(Node tree, int data, int level) {
 		if (tree == null)
-			return new Node(data, null, null);
+			return new Node(data, null, null, level);
 		if (tree.value > data) {
-			tree.left = insert(tree.left, data);
+			tree.left = insert(tree.left, data, level + 1);
 			return tree;
 		}
-		tree.right = insert(tree.right, data);
+		tree.right = insert(tree.right, data, level + 1);
 		return tree;
 	}
 
 	public Node build(int... data) {
 		Node root = null;
 		if (data.length > 0) {
-			root = new Node(data[0], null, null);
+			root = new Node(data[0], null, null, 0);
 			for (int i = 1; i < data.length; i++) {
-				insert(root, data[i]);
+				insert(root, data[i], 0);
 			}
 		}
 		return root;
+	}
+
+	public void levelOrderTraversal(Node tree) {
+		var stack = new Stack<Node>();
+		stack.push(tree);
+		while (!/* NOT */stack.empty()) {
+			var node = stack.pop();
+			System.out.println(String.format("<%3d, %3d>", node.value, node.level));
+			if (node.left != null)
+				stack.push(node.left);
+			if (node.right != null)
+				stack.push(node.right);
+		}
+	}
+
+	public void transplant(Node root, int u, int v) {
+		if (root == null)
+			root = new Node(v, null, null, 0);
+		Node p = null;
+		Node vNode = find(root, v);
+		while (root != null && root.value != u) {
+			p = root;
+			if (root.value > u)
+				root = root.left;
+			else
+				root = root.right;
+		}
+
+		if (p == null)
+			root = vNode;
+		if (p.left != null && p.left.value == u)
+			p.left = vNode;
+		else
+			p.right = vNode;
+
+	}
+
+	public void transplant(Node root, int u, Node v) {
+		if (root == null)
+			root = v;
+		Node p = null;
+
+		while (root != null && root.value != u) {
+			p = root;
+			if (root.value > u)
+				root = root.left;
+			else
+				root = root.right;
+		}
+
+		if (p == null)
+			root = v;
+		if (p.left != null && p.left.value == u)
+			p.left = v;
+		else
+			p.right = v;
+
+	}
+
+	public void delete(Node root, int u) {
+		Node tree = root;
+		if (root == null)
+			return;
+
+		Node p = null;
+
+		while (root != null && root.value != u) {
+			p = root;
+			if (root.value > u) {
+				root = root.left;
+			} else {
+				root = root.right;
+			}
+		}
+		if (root == null) {
+			return;
+		} else if (root.left == null) {
+			transplant(tree, u, root.right);
+		} else if (root.right == null) {
+			transplant(tree, u, root.left);
+		} else {
+			Node v = minimum(root.right);
+			if (v.value == root.right.value) {
+				transplant(tree, v.value, v.right);
+				v.right = root.right;
+			}
+			transplant(tree, u, v);
+			v.left = root.left;
+		}
 	}
 }

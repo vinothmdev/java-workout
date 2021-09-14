@@ -51,5 +51,9 @@ class UtilsTest {
 		Node testTree = treeUtils.build(new int[] { 2, 4, 3, 6, 7, 13, 9, 15, 17, 18, 20 });
 		assertEquals(15, treeUtils.successor(testTree, 13).value);
 		assertEquals(17, treeUtils.successor(testTree, 15).value);
+		treeUtils.levelOrderTraversal(testTree);
+		System.out.println("----------------------");
+		treeUtils.delete(testTree, 13);
+		treeUtils.levelOrderTraversal(testTree);
 	}
 }
