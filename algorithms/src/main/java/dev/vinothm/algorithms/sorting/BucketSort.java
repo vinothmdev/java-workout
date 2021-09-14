@@ -10,15 +10,19 @@ public class BucketSort {
 	int max = max(arr);
 	@SuppressWarnings("unchecked")
 	List<Integer>[] buckets = new ArrayList[numOfBuckets];
+	// Initialize the bucket
 	for (int i = 0; i < numOfBuckets; i++)
 	    buckets[i] = new ArrayList<Integer>();
-	for (int x : arr) {
-	    int bucketIndex = (int) Math.ceil((float) x * (float) numOfBuckets / (float) max);
-	    buckets[bucketIndex - 1].add(x);
-	}
+
+	// Add values to the bucket
+	for (int x : arr)
+	    buckets[getBucket(x, numOfBuckets, max)].add(x);
+
 	for (int i = 0; i < numOfBuckets; i++)
 	    printBucket(buckets[i]);
 	int k = 0;
+
+	// Sort and Merge
 	for (int i = 0; i < numOfBuckets; i++) {
 	    List<Integer> list = buckets[i];
 	    list.sort((a, b) -> a.compareTo(b));
@@ -26,6 +30,10 @@ public class BucketSort {
 		arr[k++] = list.get(j);
 	    }
 	}
+    }
+
+    private int getBucket(int v, int n, int m) {
+	return (int) Math.ceil((float) v * (float) n / (float) m) - 1;
     }
 
     private void printBucket(List<Integer> bucket) {
