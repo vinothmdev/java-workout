@@ -3,6 +3,10 @@ package dev.vinothm.algorithms.tree;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonValue;
+
 public class RBTree {
 
     RBNode root = null;
@@ -79,8 +83,10 @@ public class RBTree {
 	if (p == null) {
 	    this.root = node;
 	} else if (p.value > value) {
+	    node.left = p.left;
 	    p.left = node;
 	} else {
+	    node.right = p.right;
 	    p.right = node;
 	}
 
@@ -88,7 +94,7 @@ public class RBTree {
     }
 
     public void fixTree(RBNode node) {
-	while (node.parent != null && node.parent.parent != null && node.parent.color == NodeColor.RED) {
+	while (node.parent != null && node.parent.color == NodeColor.RED) {
 	    if (node.parent == node.parent.parent.left) {
 		var y = node.parent.parent.right;
 
@@ -101,10 +107,11 @@ public class RBTree {
 		    if (node.equals(node.parent.right)) {
 			node = node.parent;
 			leftRotate(node);
+		    } else {
+			node.parent.color = NodeColor.BLACK;
+			node.parent.parent.color = NodeColor.RED;
+			rightRotate(node.parent.parent);
 		    }
-		    node.parent.color = NodeColor.BLACK;
-		    node.parent.parent.color = NodeColor.RED;
-		    rightRotate(node.parent.parent);
 		}
 
 	    } else {
@@ -119,10 +126,11 @@ public class RBTree {
 		    if (node.equals(node.parent.right)) {
 			node = node.parent;
 			leftRotate(node);
+		    } else {
+			node.parent.color = NodeColor.BLACK;
+			node.parent.parent.color = NodeColor.RED;
+			rightRotate(node.parent.parent);
 		    }
-		    node.parent.color = NodeColor.BLACK;
-		    node.parent.parent.color = NodeColor.RED;
-		    rightRotate(node.parent.parent);
 		}
 	    }
 	}
@@ -143,10 +151,33 @@ public class RBTree {
 	}
     }
 
+    public JsonObject getTreeJson(RBNode tree) {
+	if (tree == null)
+	    return null;
+	var obj = Json.createObjectBuilder().add("value", tree.value).add("color", tree.color.toString().toLowerCase());
+
+	var child = Json.createArrayBuilder();
+	if (tree.left != null) {
+	    child.add(getTreeJson(tree.left));
+	}
+	if (tree.right != null) {
+	    child.add(getTreeJson(tree.right));
+	}
+	obj.add("children", child.build());
+
+	if (tree.parent == null) {
+	    obj.add("parent", JsonValue.NULL);
+	} else {
+	    obj.add("parent", tree.parent.value);
+	}
+	return obj.build();
+    }
+
     public static void main(String[] args) {
 	var tree = new RBTree();
 	var inputs = List.of(1, 2, 4, 5, 7, 8, 11, 14, 15);
 	inputs.forEach(e -> tree.insert(e));
 	tree.levelOrderTraversal(tree.root);
+	System.out.println(tree.getTreeJson(tree.root).toString());
     }
 }
