@@ -33,6 +33,6 @@ public class Equal {
     }
 
     public static void main(String[] args) {
-	Equal.equal(new ArrayList<Integer>(List.of(1, 5, 5)));
+	System.out.println(Equal.equal(new ArrayList<Integer>(List.of(1, 5, 5))));
     }
 }
